@@ -63,6 +63,7 @@ function display_connections(snapshot) {
 function reset_choices() {
 	$("#choice_1").empty();
 	$("#choice_2").empty();
+	$("#result").empty();
 	if (player === 1) {
 		db.ref("data/choice_1").set(-1);
 	} else if (player === 2) {
@@ -77,36 +78,58 @@ function get_winner() {
 	if (choice_1 === 'r' && choice_2 === 'r' ||
 		choice_1 === 'p' && choice_2 === 'p' ||
 		choice_1 === 's' && choice_2 === 's') {
+		$("#result").text("TIE");
 	} else if (choice_1 === 'r' && choice_2 === 's' ||
 		choice_1 === 'p' && choice_2 === 'r' ||
 		choice_1 === 's' && choice_2 === 'p') {
 		if (player === 1) {
 			wins++;
+			$("#result").text("YOU WIN");
 		} else if (player === 2) {
 			loss++;
+			$("#result").text("YOU LOSE");
+		} else {
+			$("#result").text("PLAYER 1 WINS");
 		}
 	} else if (choice_1 === 'r' && choice_2 === 'p' ||
 		choice_1 === 'p' && choice_2 === 's' ||
 		choice_1 === 's' && choice_2 === 'r') {
 		if (player === 1) {
 			loss++;
+			$("#result").text("YOU LOSE");
 		} else if (player === 2) {
 			wins++;
+			$("#result").text("YOU WIN");
+		} else {
+			$("#result").text("PLAYER 2 WINS");
 		}
+	}
+
+	if (player !== 0) {
+		$("#wins").text("Wins: " + wins);
+		$("#loss").text("Losses: " + loss);
+	}
+}
+
+function get_img(choice) {
+	if (choice === 'r') {
+		return $("<img>").attr("src", "assets/images/Rock.png");
+	} else if (choice === 'p') {
+		return $("<img>").attr("src", "assets/images/Paper.png");
+	} else if (choice === 's') {
+		return $("<img>").attr("src", "assets/images/Scissors.png");
 	}
 }
 
 function write_player_data(snapshot) {
 	set_player_data(snapshot);
 	if (player_data.choice_1 !== -1 && player_data.choice_2 !== -1) {
-		$("#choice_1").text(player_data.choice_1);
-		$("#choice_2").text(player_data.choice_2);
+		$("#choice_1").append(get_img(player_data.choice_1));
+		$("#choice_2").append(get_img(player_data.choice_2));
 		displayed_winner = true;
 		setTimeout(reset_choices, 5000);
 		get_winner();
 	}
-	$("#player_1").text("Wins: " + wins);
-	$("#player_2").text("Losses: " + loss);
 }
 
 db.ref(".info/connected").on("value", add_connection);
@@ -127,6 +150,9 @@ function display_choices() {
 		create_button("Scissors", 's', "btn-primary");
 		displayed_buttons = true;
 	}
+
+	$("#wins").text("Wins: " + wins);
+	$("#loss").text("Losses: " + loss);
 }
 
 function set_choice() {
@@ -155,5 +181,5 @@ function send_message(e) {
 	$("#message").val("");
 }
 
-$("#enter").click(send_message);
+$("#btn").click(send_message);
 db.ref("chat").on("child_added", update_chat);

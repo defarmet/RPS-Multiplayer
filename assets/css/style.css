@@ -1,0 +1,14 @@
+#choice_1,
+#choice_2 {
+	height: 200px;
+}
+
+#chat {
+	height: 300px;
+	overflow: auto;
+}
+
+img {
+	height: 200px;
+	width: auto;
+}

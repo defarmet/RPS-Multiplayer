@@ -14,19 +14,49 @@
 </head>
 
 <body>
-	<div id="connections"></div>
-	<div id="player_1"></div>
-	<div id="player_2"></div>
-	<div id="choice_1"></div>
-	<div id="choice_2"></div>
-	<div id="choices"></div>
-	<div id="chat"></div>
-
-	<form>
-        <div class="form-group row">
-                <input class="form-control" id="message" type="text">
+	<div class="container">
+	<div class="card">
+	<div class="card-header">
+		<h5>RPS</h5>
 	</div>
-	<button class="btn btn-primary" id="enter" type="submit">Enter</button>
-	</form>
+	<div class="card-body">
+		<div class="row">
+			<div id="result" class="col-3"></div>
+			<div id="choice_1" class="col-3 text-center"></div>
+			<div id="choice_2" class="col-3 text-center"></div>
+		</div>
+		<br>
+		<div class="row">
+			<div id="choices" class="btn-group col-md-6 col-10">
+			</div>
+			<div class="col-2">
+				<div id="wins" class="row"></div>
+				<div id="loss" class="row"></div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<br>
+
+	<div class="card">
+	<div class="card-header">
+		<h5>Chat</h5>
+	</div>
+	<div class="card-body">
+		<div class="card">
+		<div id="chat" class="card-body"></div>
+		</div>
+		<br>
+		<form>
+	        <div class="form-group">
+			<input class="form-control" id="message" type="text">
+		</div>
+		<button class="btn btn-primary" id="btn" type="submit">
+			Enter
+		</button>
+		</form>
+	</div>
+	</div>
 </body>
 </html>
