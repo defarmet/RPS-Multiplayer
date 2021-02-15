@@ -175,7 +175,12 @@ function update_chat(snapshot) {
 
 function send_message(e) {
 	e.preventDefault();
-	var message = "Player " + player + ": " + $("#message").val().trim();
+	var message = "";
+	if (player > 0) {
+		message = "Player " + player + ": " + $("#message").val().trim();
+	} else {
+		message = "Guest: " + $("#message").val().trim();
+	}
 	var message_ref = db.ref("chat").push(message);
 	message_ref.onDisconnect().remove();
 	$("#message").val("");
